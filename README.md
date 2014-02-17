@@ -14,5 +14,7 @@ Compilation
 Usage
 -------------
 
-* ./Matrix-Client > /dev/null
-* ./Matrix-Client | nc raspberry-ip 1337
+* Example Apps in app/
+  * ./matrix-fire 1.2.3.4
+  * ./matrix-fire -d
+  * ./matrix-fire -s 1.2.3.4

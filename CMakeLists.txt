@@ -4,14 +4,36 @@ project(Matrix-Client)
 
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
-set(CMAKE_C_FLAGS_DEBUG "-DDEBUG -ggdb -O0 -Wall -Wpedantic -Wextra -pedantic -Weffc++")
+set(CMAKE_C_FLAGS "-DDEBUG -ggdb -O0 -Wall -Wextra")
 
-set(MATRIX_SRCS src/graphics.c src/graphics.h
-                src/matrix.c src/matrix.h
-                src/tools.c src/tools.h
-                src/drawing.c src/drawing.h
-                src/main.c)
+set(MATRIX_CLIENT_VERSION_MAJOR "\"0\"")
+set(MATRIX_CLIENT_VERSION_MINOR "\"3\"")
 
+# Get the current working branch
+execute_process(
+  COMMAND git rev-parse --abbrev-ref HEAD
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_BRANCH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+set(GIT_BRANCH "\"${GIT_BRANCH}\"")
 
-add_executable(Matrix-Client ${MATRIX_SRCS})
-target_link_libraries(Matrix-Client m)
+# Get the latest abbreviated commit hash of the working branch
+execute_process(
+  COMMAND git log -1 --format=%h
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_COMMIT_HASH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+set(GIT_COMMIT_HASH "\"${GIT_COMMIT_HASH}\"")
+
+configure_file(
+  "${PROJECT_SOURCE_DIR}/matrix-client-config.h.in"
+  "${PROJECT_BINARY_DIR}/matrix-client-config.h"
+)
+
+include_directories("${PROJECT_BINARY_DIR}")
+include_directories("${PROJECT_SOURCE_DIR}")
+
+add_subdirectory(apps)
+add_subdirectory(libmatrix)
