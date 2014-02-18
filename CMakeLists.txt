@@ -7,7 +7,7 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 set(CMAKE_C_FLAGS "-DDEBUG -ggdb -O0 -Wall -Wextra")
 
 set(MATRIX_CLIENT_VERSION_MAJOR "\"0\"")
-set(MATRIX_CLIENT_VERSION_MINOR "\"3\"")
+set(MATRIX_CLIENT_VERSION_MINOR "\"4\"")
 
 # Get the current working branch
 execute_process(
