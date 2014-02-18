@@ -18,10 +18,24 @@ int main(int argc, char **argv)
         goto out;
     }
 
+    const char *text = argv[argc-1];
+    const font_t *font = &font_courier_15;
+
     picture_t *pic = picture_alloc();
 
-    matrix_update(pic);
+    scrollimage *s = scrollimage_alloc( font_getWidth(text, font) );
 
+    font_scrollimage(s, text, (pixel){0,15}, font, 0);
+
+    unsigned int i;
+
+    for(i=0;i<s->width;i++) {
+        scrollimage_setPicture(s, pic, i);
+        matrix_update(pic);
+        usleep(40000);
+    }
+
+    scrollimage_free(s);
     picture_free(pic);
 
  out:

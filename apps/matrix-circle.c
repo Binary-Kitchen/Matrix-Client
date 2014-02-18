@@ -13,7 +13,7 @@ int main(int argc, char **argv)
         goto out;
     }
 
-    if (matrix_cmd(MATRIX_MODE_GREYSCALE)) {
+    if (matrix_cmd(MATRIX_MODE_GRAYSCALE)) {
         retval = -1;
         goto out;
     }

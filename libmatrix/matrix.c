@@ -61,7 +61,7 @@ void matrix_close(void)
 void matrix_update(picture_t * pic)
 {
 	if (sil == 0) {
-		picture_print(pic);
+        picture_print(pic, m_mode);
 	}
 	if (dev == 0) {
 		matrix_send(pic);
@@ -71,7 +71,7 @@ void matrix_update(picture_t * pic)
 int matrix_cmd(uint32_t cmd)
 {
 	int retval = 0;
-	if (cmd == MATRIX_MODE_GREYSCALE || cmd == MATRIX_MODE_MONOCHROME) {
+    if (cmd == MATRIX_MODE_GRAYSCALE || cmd == MATRIX_MODE_MONOCHROME) {
 		m_mode = cmd;
 	}
 
@@ -96,8 +96,6 @@ int matrix_cmd(uint32_t cmd)
 
 	return retval;
 }
-
-//////////////////
 
 #define MATRIX_NUM_PANELS_ROWS 5
 #define MATRIX_NUM_PANELS_COLS 5
@@ -181,14 +179,14 @@ static void matrix_send(picture_t * pic)
 			for (y = 0; y < NUM_ROWS; y++) {
 				unsigned char bright =
 				    picture_getPixel(pic, x, y);
-				if (bright > 127) {
+                if (bright) {
 					matrix_setPixelMonochrome((matrix_picture_t *) & buffer, x, y);
 				}
 			}
 		}
 		sendto(sockfd, buffer, sizeof(matrix_picture_t), 0,
 		       (struct sockaddr *)&servaddr, sizeof(servaddr));
-	} else if (m_mode == MATRIX_MODE_GREYSCALE) {
+    } else if (m_mode == MATRIX_MODE_GRAYSCALE) {
 		for (x = 0; x < NUM_COLS; x++) {
 			for (y = 0; y < NUM_ROWS; y++) {
 				unsigned char bright =

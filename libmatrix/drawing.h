@@ -1,5 +1,5 @@
 #ifndef DRAWING_H
-#define DRAWING_h
+#define DRAWING_H
 
 #include "graphics.h"
 
