@@ -10,7 +10,7 @@ void picture_line(picture_t * pic, pixel start, pixel end, int on)
 	unsigned char inv;
 
 	if (start.y == end.y) {
-        for (tmp = start.x; tmp <= end.x; tmp++)
+		for (tmp = start.x; tmp <= end.x; tmp++)
 			picture_setPixel(pic, tmp, start.y, on);
 		return;
 	}

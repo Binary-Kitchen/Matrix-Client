@@ -13,10 +13,10 @@ int main(int argc, char **argv)
 		goto out;
 	}
 
-    if (matrix_cmd(MATRIX_MODE_GRAYSCALE)) {
+	if (matrix_cmd(MATRIX_MODE_GRAYSCALE)) {
 		retval = -1;
 		goto out;
-    }
+	}
 
 	picture_t *pic = picture_alloc();
 

@@ -63,7 +63,7 @@ int app_init(int argc, char **argv)
 	}
 
 	if (silence && develop) {
-        puts("You can't use both, silence and develop mode");
+		puts("You can't use both, silence and develop mode");
 		return -1;
 	}
 
@@ -71,7 +71,7 @@ int app_init(int argc, char **argv)
 		server = argv[optind];
 	} else {
 		if (!develop) {
-            puts("You must specify the server!");
+			puts("You must specify the server!");
 			return -1;
 		}
 	}

@@ -38,20 +38,20 @@ void picture_print(picture_t * pic, int m_mode)
 	for (y = 0; y < NUM_ROWS; y++) {
 		//ptr = buffer;
 		for (x = 0; x < NUM_COLS; x++) {
-            int brightness = picture_getPixel(pic, x, y);
+			int brightness = picture_getPixel(pic, x, y);
 
-            if (m_mode == MATRIX_MODE_GRAYSCALE) {
-                brightness = (double)brightness / PIX_FACTOR;
-                if (brightness == 8)
-                    brightness--;
-            } else {
-                brightness = brightness ? 7 : 0;
-            }
+			if (m_mode == MATRIX_MODE_GRAYSCALE) {
+				brightness = (double)brightness / PIX_FACTOR;
+				if (brightness == 8)
+					brightness--;
+			} else {
+				brightness = brightness ? 7 : 0;
+			}
 
-            int written =
+			int written =
 			    sprintf(ptr, "%s\e[0m ", bright_table[brightness]);
 
-            ptr += written;
+			ptr += written;
 		}
 		ptr += sprintf(ptr, "\n");
 	}
