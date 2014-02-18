@@ -8,7 +8,8 @@
 
 const unsigned char sevenseg[][15 * 8] = {
     {
-    1, 1, 1, 1, 1, 1, 1, 0,
+    0, 0, 1, 1, 1, 0, 0, 0,
+    0, 1, 0, 0, 0, 1, 0, 0,
     1, 0, 0, 0, 0, 0, 1, 0,
     1, 0, 0, 0, 0, 0, 1, 0,
     1, 0, 0, 0, 0, 0, 1, 0,
@@ -20,9 +21,8 @@ const unsigned char sevenseg[][15 * 8] = {
     1, 0, 0, 0, 0, 0, 1, 0,
     1, 0, 0, 0, 0, 0, 1, 0,
     1, 0, 0, 0, 0, 0, 1, 0,
-    1, 0, 0, 0, 0, 0, 1, 0,
-    1, 0, 0, 0, 0, 0, 1, 0,
-    1, 1, 1, 1, 1, 1, 1, 0,
+    0, 1, 0, 0, 0, 1, 0, 0,
+    0, 0, 1, 1, 1, 0, 0, 0,
     }, {
     0, 0, 0, 0, 1, 0, 0, 0,
     0, 0, 0, 1, 1, 0, 0, 0,
@@ -235,6 +235,7 @@ int main(int argc, char **argv)
 	epoch_time = time(NULL);
 	unsigned char display[5];
 	int i;
+    int point = 0;
 
 	for (;;) {
 		epoch_time = time(NULL);
@@ -248,7 +249,7 @@ int main(int argc, char **argv)
 
 		display[0] = hour / 10;
 		display[1] = hour % 10;
-		display[2] = 10;	// :
+        display[2] = point ? 10 : 11;	// :
 		display[3] = minute / 10;
 		display[4] = minute % 10;
 
@@ -259,6 +260,7 @@ int main(int argc, char **argv)
 
 		matrix_update(pic);
 		picture_clear(pic);
+        point ^= 1;
 		sleep(1);
 	}
 	picture_free(pic);
