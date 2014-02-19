@@ -20,6 +20,8 @@ int main(int argc, char **argv)
 
 	picture_t *pic = picture_alloc();
 
+    picture_full(pic);
+
 	matrix_update(pic);
 
 	picture_free(pic);

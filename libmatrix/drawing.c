@@ -10,11 +10,21 @@ void picture_line(picture_t * pic, pixel start, pixel end, int on)
 	unsigned char inv;
 
 	if (start.y == end.y) {
+        if(start.x > end.x) {
+            pixel tmp = start;
+            start = end;
+            end = tmp;
+        }
 		for (tmp = start.x; tmp <= end.x; tmp++)
 			picture_setPixel(pic, tmp, start.y, on);
 		return;
 	}
 	if (start.x == end.x) {
+        if(start.y > end.y) {
+            pixel tmp = start;
+            start = end;
+            end = tmp;
+        }
 		for (tmp = start.y; tmp <= end.y; tmp++)
 			picture_setPixel(pic, start.x, tmp, on);
 		return;
@@ -57,7 +67,7 @@ void picture_line(picture_t * pic, pixel start, pixel end, int on)
 void picture_circle(picture_t * pic, pixel center, unsigned int radius,
 		    unsigned int on)
 {
-	picture_setPixel(pic, center.x, center.y, on);
+    //picture_setPixel(pic, center.x, center.y, on);
 
 	double alpha;
 	double r = radius;

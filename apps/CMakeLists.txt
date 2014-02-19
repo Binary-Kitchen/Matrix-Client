@@ -1,21 +1,23 @@
 set(APP_COMMON app-common.c app-common.h)
+set(LINK_LIBS libmatrix m)
 
 set(FIRE_SRCS matrix-fire.c ${APP_COMMON})
 set(CIRCLE_SRCS matrix-circle.c ${APP_COMMON})
 set(TEMPLATE_SRCS matrix-template.c ${APP_COMMON})
 set(SCROLLTEXT_SRCS matrix-scrolltext.c ${APP_COMMON})
 set(CLOCK_SRCS matrix-clock.c ${APP_COMMON})
-
-set(LINK_LIBS libmatrix m)
+set(ANALOGCLOCK_SRCS matrix-analogclock.c ${APP_COMMON})
 
 add_executable(matrix-fire ${FIRE_SRCS})
 add_executable(matrix-circle ${CIRCLE_SRCS})
 add_executable(matrix-template ${TEMPLATE_SRCS})
 add_executable(matrix-scrolltext ${SCROLLTEXT_SRCS})
 add_executable(matrix-clock ${CLOCK_SRCS})
+add_executable(matrix-analogclock ${ANALOGCLOCK_SRCS})
 
 target_link_libraries(matrix-fire ${LINK_LIBS})
 target_link_libraries(matrix-circle ${LINK_LIBS})
 target_link_libraries(matrix-template ${LINK_LIBS})
 target_link_libraries(matrix-scrolltext ${LINK_LIBS})
 target_link_libraries(matrix-clock ${LINK_LIBS})
+target_link_libraries(matrix-analogclock ${LINK_LIBS})
