@@ -32,6 +32,8 @@ configure_file(
   "${PROJECT_BINARY_DIR}/matrix-client-config.h"
 )
 
+configure_file(${PROJECT_SOURCE_DIR}/scripts/matrix-pic-url.sh ${PROJECT_BINARY_DIR}/apps/matrix-pic-url.sh COPYONLY)
+
 include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}")
 
