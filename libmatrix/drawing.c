@@ -64,37 +64,34 @@ void picture_line(picture_t * pic, pixel start, pixel end, int on)
 	}
 }
 
-void picture_circle(picture_t * pic, pixel center, unsigned int radius,
+void picture_circle(picture_t * pic, pixel center, double radius,
 		    unsigned int on)
 {
-    //picture_setPixel(pic, center.x, center.y, on);
-
 	double alpha;
-	double r = radius;
 
 	for (alpha = 0.001; alpha < M_PI / 2 - (0.0); alpha += 0.002) {
 		double a, h;
-		a = r * sqrt(1.0 - pow(tan(alpha), 2));
-		h = sqrt(pow(r, 2) - pow(a, 2));
+		a = radius * sqrt(1.0 - pow(tan(alpha), 2));
+		h = sqrt(pow(radius, 2) - pow(a, 2));
 
-		if (!(center.x + (unsigned int)a >= NUM_COLS
-		      || center.y + (unsigned int)h >= NUM_ROWS)) {
-			picture_setPixel(pic, center.x + (unsigned int)a,
-					 center.y + (unsigned int)h, on);
+		if (!(center.x + (int)a >= NUM_COLS
+		      || center.y + (int)h >= NUM_ROWS)) {
+			picture_setPixel(pic, center.x + (int)a,
+					 center.y + (int)h, on);
 		}
 		if (!((int)center.y - (int)h < 0
-		      || center.x + (unsigned int)a >= NUM_COLS)) {
-			picture_setPixel(pic, center.x + (unsigned int)a,
-					 center.y - (unsigned int)h, on);
+		      || center.x + (int)a >= NUM_COLS)) {
+			picture_setPixel(pic, center.x + (int)a,
+					 center.y - (int)h, on);
 		}
 		if (!((int)center.x - (int)a < 0 || (int)center.y - (int)h < 0)) {
-			picture_setPixel(pic, center.x - (unsigned int)a,
-					 center.y - (unsigned int)h, on);
+			picture_setPixel(pic, center.x - (int)a,
+					 center.y - (int)h, on);
 		}
-		if (!(center.x - (unsigned int)a < 0
-		      || center.y + (unsigned int)h >= NUM_ROWS)) {
-			picture_setPixel(pic, center.x - (unsigned int)a,
-					 center.y + (unsigned int)h, on);
+		if (!(center.x - (int)a < 0
+		      || center.y + (int)h >= NUM_ROWS)) {
+			picture_setPixel(pic, center.x - (int)a,
+					 center.y + (int)h, on);
 		}
 
 	}
