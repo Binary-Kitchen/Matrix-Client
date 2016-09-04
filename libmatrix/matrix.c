@@ -9,8 +9,7 @@
 #include "matrix.h"
 #include "tools.h"
 
-static int sil = 0;
-static int dev = 0;
+static bool sil, dev;
 
 static uint32_t m_mode = MATRIX_MODE_MONOCHROME;
 
@@ -20,81 +19,72 @@ static socklen_t len;
 
 static void matrix_send(picture_t * pic);
 
-int matrix_init(int silence, int develop, const char *server, int port)
+int matrix_init(bool silence, bool develop, const char *server, int port)
 {
+	struct hostent *hp;
+	
 	sil = silence;
 	dev = develop;
-	int retval = 0;
-
-	if (dev == 0) {
-		struct hostent *hp;
-		bzero(&servaddr, sizeof(servaddr));
-
-		printf("Connecting to %s:%d\n", server, port);
-
-		hp = gethostbyname(server);
-		if (!hp) {
-			fprintf(stderr, "Could not obtain address of %s\n",
-				server);
-			return -1;
-		}
-
-		sockfd = socket(AF_INET, SOCK_DGRAM, 0);
-		memcpy((void *)&servaddr.sin_addr, hp->h_addr_list[0],
-		       hp->h_length);
-		servaddr.sin_family = AF_INET;
-		servaddr.sin_port = htons(port);
-
-		retval = matrix_cmd(MATRIX_MODE_MONOCHROME);
+	
+	if (dev == true)
+		return 0;
+	
+	bzero(&servaddr, sizeof(servaddr));
+	
+	printf("Connecting to %s:%d\n", server, port);
+	
+	hp = gethostbyname(server);
+	if (!hp) {
+		fprintf(stderr, "Could not obtain address of %s\n", server);
+		return -1;
 	}
-
-	return retval;
+	
+	sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+	memcpy((void *)&servaddr.sin_addr, hp->h_addr_list[0], hp->h_length);
+	servaddr.sin_family = AF_INET;
+	servaddr.sin_port = htons(port);
+	
+	return matrix_cmd(MATRIX_MODE_MONOCHROME);
 }
 
 void matrix_close(void)
 {
-	if (dev == 0) {
+	if (sockfd)
 		close(sockfd);
-	}
 }
 
 void matrix_update(picture_t * pic)
 {
-	if (sil == 0) {
+	if (sil == false)
 		picture_print(pic, m_mode);
-	}
-	if (dev == 0) {
+	if (dev == false)
 		matrix_send(pic);
-	}
 }
 
 int matrix_cmd(uint32_t cmd)
 {
-	int retval = 0;
-	if (cmd == MATRIX_MODE_GRAYSCALE || cmd == MATRIX_MODE_MONOCHROME) {
+	if (cmd == MATRIX_MODE_GRAYSCALE || cmd == MATRIX_MODE_MONOCHROME)
 		m_mode = cmd;
-	}
 
-	if (dev == 0) {
-		uint32_t matrix_retval;
-		ssize_t n;
+	if (dev == true)
+		return 0;
 
-		sendto(sockfd, &cmd, sizeof(uint32_t), 0,
-		       (struct sockaddr *)&servaddr, sizeof(servaddr));
+	uint32_t matrix_retval;
+	ssize_t n;
 
-		// Give 10ms
-		usleep(10000);
-		n = recvfrom(sockfd, (void *)&matrix_retval,
-			     sizeof(matrix_retval), MSG_DONTWAIT,
-			     (struct sockaddr *)&servaddr, &len);
-		if (n != 4) {
-			retval = 1;
-		} else if (matrix_retval != cmd) {
-			retval = 1;
-		}
-	}
+	sendto(sockfd, &cmd, sizeof(uint32_t), 0,
+	       (struct sockaddr *)&servaddr, sizeof(servaddr));
 
-	return retval;
+	// Give 10ms
+	usleep(10000);
+
+	n = recvfrom(sockfd, (void *)&matrix_retval, sizeof(matrix_retval),
+		     MSG_DONTWAIT, (struct sockaddr *)&servaddr, &len);
+
+	if (n != 4 || matrix_retval != cmd)
+		return -1;
+
+	return 0;
 }
 
 #define MATRIX_NUM_PANELS_ROWS 5
@@ -166,41 +156,38 @@ static void matrix_setPixelMonochrome(matrix_picture_t * pic, unsigned int x,
 
 static void matrix_send(picture_t * pic)
 {
+	int x, y;
+	unsigned char brightness;
+
 	// Independent from mode, this is the maximum size
 	matrix_frame_t buffer;
 	// Zero buffer
 	bzero(&buffer, sizeof(buffer));
 
 	// Convert pic to matrix picture
-	int x, y;
-
 	if (m_mode == MATRIX_MODE_MONOCHROME) {
 		for (x = 0; x < NUM_COLS; x++) {
 			for (y = 0; y < NUM_ROWS; y++) {
-				unsigned char bright =
-				    picture_getPixel(pic, x, y);
-				if (bright) {
-					matrix_setPixelMonochrome((matrix_picture_t *) & buffer, x, y);
-				}
+				brightness = picture_getPixel(pic, x, y);
+				if (brightness)
+					matrix_setPixelMonochrome((matrix_picture_t *)&buffer,
+											  x, y);
 			}
 		}
-		sendto(sockfd, buffer, sizeof(matrix_picture_t), 0,
-		       (struct sockaddr *)&servaddr, sizeof(servaddr));
+
 	} else if (m_mode == MATRIX_MODE_GRAYSCALE) {
 		for (x = 0; x < NUM_COLS; x++) {
 			for (y = 0; y < NUM_ROWS; y++) {
-				unsigned char bright =
-				    picture_getPixel(pic, x, y);
-				if (bright) {
-					bright = bright / PIX_FACTOR;
-					if (bright == 8)
-						bright--;
-					matrix_setPixelGreyscale(&buffer, x, y,
-								 bright);
+				brightness = picture_getPixel(pic, x, y);
+				if (brightness) {
+					brightness = brightness / PIX_FACTOR;
+					if (brightness == 8)
+						brightness--;
+					matrix_setPixelGreyscale(&buffer, x, y, brightness);
 				}
 			}
 		}
-		sendto(sockfd, buffer, sizeof(matrix_frame_t), 0,
-		       (struct sockaddr *)&servaddr, sizeof(servaddr));
 	}
+	sendto(sockfd, buffer, sizeof(matrix_picture_t), 0,
+		   (struct sockaddr *)&servaddr, sizeof(servaddr));
 }

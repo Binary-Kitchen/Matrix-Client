@@ -2,10 +2,11 @@
 #define MATRIX_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #include "graphics.h"
 
-int matrix_init(int silence, int develop, const char *server, int port);
+int matrix_init(bool silence, bool develop, const char *server, int port);
 
 void matrix_close(void);
 
