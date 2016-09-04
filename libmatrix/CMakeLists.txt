@@ -10,4 +10,8 @@ set(LIBMATRIX_SRCS graphics.c graphics.h
                    fonts/font-courier-20.c
                    fonts/font-AvantGarde-Book-20.c)
 
-add_library(libmatrix STATIC ${LIBMATRIX_SRCS})
+add_library(matrix SHARED ${LIBMATRIX_SRCS})
+
+install(TARGETS matrix
+	LIBRARY DESTINATION lib
+	ARCHIVE DESTINATION lib)

@@ -1,44 +1,27 @@
 set(APP_COMMON app-common.c app-common.h)
-set(LINK_LIBS libmatrix m)
+set(LINK_LIBS matrix m)
 
-set(ANALOGCLOCK_SRCS matrix-analogclock.c ${APP_COMMON})
-set(BLANK_SRCS matrix-blank.c ${APP_COMMON})
-set(CAIROEXAMPLE_SRCS matrix-cairoexample.c ${APP_COMMON})
-set(CHESS_SRCS matrix-chess.c ${APP_COMMON})
-set(CIRCLE_SRCS matrix-circle.c ${APP_COMMON})
-set(CLOCK_SRCS matrix-clock.c ${APP_COMMON})
-set(FIRE_SRCS matrix-fire.c ${APP_COMMON})
-set(FULLBLINK_SRCS matrix-fullblink.c ${APP_COMMON})
-set(GRAYSCALE_SRCS matrix-grayscale.c ${APP_COMMON})
-set(RAIN_SRCS matrix-rain.c ${APP_COMMON})
-set(SCROLLTEXT_SRCS matrix-scrolltext.c ${APP_COMMON})
-set(TEMPLATE_SRCS matrix-template.c ${APP_COMMON})
-set(ZWICKL_SRCS matrix-zwickl.c ${APP_COMMON})
+set(APPS
+	matrix-analogclock
+	matrix-blank
+	matrix-cairoexample
+	matrix-chess
+	matrix-circle
+	matrix-clock
+	matrix-fire
+	matrix-fullblink
+	matrix-grayscale
+	matrix-rain
+	matrix-scrolltext
+	matrix-template
+	matrix-zwickl)
 
-add_executable(matrix-analogclock ${ANALOGCLOCK_SRCS})
-add_executable(matrix-blank ${BLANK_SRCS})
-add_executable(matrix-cairoexample ${CAIROEXAMPLE_SRCS})
-add_executable(matrix-chess ${CHESS_SRCS})
-add_executable(matrix-circle ${CIRCLE_SRCS})
-add_executable(matrix-clock ${CLOCK_SRCS})
-add_executable(matrix-fire ${FIRE_SRCS})
-add_executable(matrix-fullblink ${FULLBLINK_SRCS})
-add_executable(matrix-grayscale ${GRAYSCALE_SRCS})
-add_executable(matrix-rain ${RAIN_SRCS})
-add_executable(matrix-scrolltext ${SCROLLTEXT_SRCS})
-add_executable(matrix-template ${TEMPLATE_SRCS})
-add_executable(matrix-zwickl ${ZWICKL_SRCS})
+foreach(APP ${APPS})
+	add_executable(${APP} ${APP}.c ${APP_COMMON})
+	target_link_libraries(${APP} ${LINK_LIBS})
+endforeach(APP)
 
-target_link_libraries(matrix-analogclock ${LINK_LIBS})
-target_link_libraries(matrix-blank ${LINK_LIBS})
 target_link_libraries(matrix-cairoexample ${LINK_LIBS} cairo)
-target_link_libraries(matrix-chess ${LINK_LIBS})
-target_link_libraries(matrix-circle ${LINK_LIBS})
-target_link_libraries(matrix-clock ${LINK_LIBS})
-target_link_libraries(matrix-fire ${LINK_LIBS})
-target_link_libraries(matrix-fullblink ${LINK_LIBS})
-target_link_libraries(matrix-grayscale ${LINK_LIBS})
-target_link_libraries(matrix-rain ${LINK_LIBS})
-target_link_libraries(matrix-scrolltext ${LINK_LIBS})
-target_link_libraries(matrix-template ${LINK_LIBS})
 target_link_libraries(matrix-zwickl ${LINK_LIBS} cairo)
+
+install(TARGETS ${APPS} DESTINATION bin/)
