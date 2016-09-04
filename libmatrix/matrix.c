@@ -11,7 +11,7 @@
 
 static bool sil, dev;
 
-static uint32_t m_mode = MATRIX_MODE_MONOCHROME;
+static enum matrix_command m_mode = MATRIX_MODE_MONOCHROME;
 
 static int sockfd = 0;
 static struct sockaddr_in servaddr;
@@ -61,16 +61,16 @@ void matrix_update(picture_t * pic)
 		matrix_send(pic);
 }
 
-int matrix_cmd(uint32_t cmd)
+int matrix_cmd(enum matrix_command cmd)
 {
+	uint32_t matrix_retval;
+	ssize_t n;
+
 	if (cmd == MATRIX_MODE_GRAYSCALE || cmd == MATRIX_MODE_MONOCHROME)
 		m_mode = cmd;
 
 	if (dev == true)
 		return 0;
-
-	uint32_t matrix_retval;
-	ssize_t n;
 
 	sendto(sockfd, &cmd, sizeof(uint32_t), 0,
 	       (struct sockaddr *)&servaddr, sizeof(servaddr));

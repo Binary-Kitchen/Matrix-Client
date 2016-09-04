@@ -6,15 +6,16 @@
 
 #include "graphics.h"
 
-int matrix_init(bool silence, bool develop, const char *server, int port);
+enum matrix_command {
+	MATRIX_MODE_MONOCHROME = 1,
+	MATRIX_MODE_GRAYSCALE = 2,
+	MATRIx_MODE_EXIT = 3,
+};
 
+int matrix_init(bool silence, bool develop, const char *server, int port);
 void matrix_close(void);
 
-#define MATRIX_MODE_MONOCHROME 1
-#define MATRIX_MODE_GRAYSCALE  2
-#define MATRIX_EXIT 3
-int matrix_cmd(uint32_t cmd);
-
+int matrix_cmd(enum matrix_command cmd);
 void matrix_update(picture_t * pic);
 
 #endif
