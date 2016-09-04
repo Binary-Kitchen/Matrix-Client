@@ -7,6 +7,7 @@
 
 #include "app-common.h"
 
+#if 0
 static const unsigned char tux[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0xff, 0xff,
     0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -159,6 +160,7 @@ static const unsigned char tux[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
+#endif
 
 void cairo2matrix(cairo_surface_t * surface)
 {
@@ -258,11 +260,15 @@ void cairo()
 
 int main(int argc, char **argv)
 {
-    int retval = 0;
-    if (app_init(argc, argv)) {
-        retval = -1;
-        goto out;
-    }
+	int retval = 0;
+
+	// const char *text = "       2wickl Dokumentarfilmtage       Binary Kitchen e.V.      Hackspace Regensburg      ";
+	// const font_t *font = &font_courier_15;
+
+	if (app_init(argc, argv)) {
+		retval = -1;
+		goto out;
+	}
 
 #if 1
     if (matrix_cmd(MATRIX_MODE_GRAYSCALE)) {
@@ -273,8 +279,6 @@ int main(int argc, char **argv)
 
     for(;;)
     {
-        const char *text = "       2wickl Dokumentarfilmtage       Binary Kitchen e.V.      Hackspace Regensburg      ";
-        const font_t *font = &font_courier_15;
 
         picture_t *pic = picture_alloc();
 

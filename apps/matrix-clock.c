@@ -218,6 +218,8 @@ static void picture_segment(picture_t * pic, pixel offset, int num)
 int main(int argc, char **argv)
 {
 	int retval = 0;
+	int hour, minute;
+
 	if (app_init(argc, argv)) {
 		retval = -1;
 		goto out;

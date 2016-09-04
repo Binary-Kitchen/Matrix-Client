@@ -7,6 +7,8 @@
 int main(int argc, char **argv)
 {
     int retval = 0;
+    unsigned int i;
+
     if (app_init(argc, argv)) {
         retval = -1;
         goto out;
@@ -19,13 +21,13 @@ int main(int argc, char **argv)
 
     picture_t *pic = picture_alloc();
 
-    int i;
     fread(*pic, sizeof(picture_t), 1, stdin);
-    for(i=0;i<sizeof(picture_t);i++) {
+    for(i = 0; i < sizeof(picture_t); i++) {
         (*pic)[i] = (255 - (*pic)[i]);
         if( (*pic)[i] > PIX_1 )
             (*pic)[i] -= PIX_1;
     }
+
     matrix_update(pic);
 
     picture_free(pic);
