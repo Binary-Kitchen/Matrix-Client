@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
-#include <matrix-client-config.h>
 
 #include "app-common.h"
 

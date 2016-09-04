@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <time.h>
 #include <math.h>
-#include <matrix-client-config.h>
 
 #include "app-common.h"
 

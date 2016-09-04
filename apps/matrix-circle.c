@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <matrix-client-config.h>
 
 #include "app-common.h"
 

@@ -28,8 +28,8 @@ execute_process(
 set(GIT_COMMIT_HASH "\"${GIT_COMMIT_HASH}\"")
 
 configure_file(
-  "${PROJECT_SOURCE_DIR}/matrix-client-config.h.in"
-  "${PROJECT_BINARY_DIR}/matrix-client-config.h"
+  "${PROJECT_SOURCE_DIR}/config.h.in"
+  "${PROJECT_BINARY_DIR}/config.h"
 )
 
 configure_file(${PROJECT_SOURCE_DIR}/scripts/matrix-pic-url.sh ${PROJECT_BINARY_DIR}/apps/matrix-pic-url.sh COPYONLY)

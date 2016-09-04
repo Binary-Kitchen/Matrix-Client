@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <matrix-client-config.h>
-
 #include <cairo/cairo.h>
 #include <math.h>
 
