@@ -242,15 +242,12 @@ int main(int argc, char **argv)
 		epoch_time = time(NULL);
 		tm_p = localtime(&epoch_time);
 
-		int hour, minute, second;
-
 		hour = tm_p->tm_hour;
 		minute = tm_p->tm_min;
-		second = tm_p->tm_sec;
 
 		display[0] = hour / 10;
 		display[1] = hour % 10;
-        display[2] = point ? 10 : 11;	// :
+        display[2] = point ? 10 : 11;
 		display[3] = minute / 10;
 		display[4] = minute % 10;
 

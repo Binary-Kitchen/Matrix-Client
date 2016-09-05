@@ -106,14 +106,14 @@ int matrix_cmd(enum matrix_cmd cmd)
 #define MATRIX_BYTES_ROWS ((MATRIX_NUM_ROWS+7)/8)
 #define MATRIX_BYTES_COLS ((MATRIX_NUM_COLS+7)/8)
 
-#define MATRIX_LAYERS_PER_FRAME 3
+#define MATRIX_PICTURES_PER_FRAME 3
 
 #define MATRIX_COMMAND_LEN 4
 
 #define MATRIX_CMD_IGNORE 0
 
 typedef unsigned char matrix_picture_t[MATRIX_PICTURE_SIZE];
-typedef matrix_picture_t matrix_frame_t[MATRIX_LAYERS_PER_FRAME];
+typedef matrix_picture_t matrix_frame_t[MATRIX_PICTURES_PER_FRAME];
 
 static void matrix_setPixel(matrix_frame_t *pic, unsigned int x,
 			    unsigned int y, int brightness, bool is_grayscale)
@@ -144,7 +144,7 @@ static void matrix_setPixel(matrix_frame_t *pic, unsigned int x,
 	if (brightness == 8)
 		brightness--;
 
-	for (layer = 0; layer < MATRIX_LAYERS_PER_FRAME; layer++)
+	for (layer = 0; layer < MATRIX_PICTURES_PER_FRAME; layer++)
 		if (brightness & (1 << layer))
 			*(((*pic)[layer]) + array_offset) |= (1 << bit_offset);
 }
