@@ -1,13 +1,7 @@
 #ifndef GRAPHICS_H
 #define	GRAPHICS_H
 
-#define NUM_ROWS 45
-#define NUM_COLS 40
-
-#define BYTES_ROWS ((NUM_ROWS+7)/8)
-#define BYTES_COLS ((NUM_COLS+7)/8)
-
-#define PICTURE_SIZE (NUM_ROWS * NUM_COLS)
+#include "matrix_ll.h"
 
 #define PIX_FACTOR ((double)31.875)
 
@@ -45,4 +39,4 @@ void picture_raw2pic(picture_t * pic, const unsigned char *raw);
 void picture_scroll(picture_t * pic, unsigned direction,
 		    const unsigned char *fillup);
 
-#endif				/* GRAPHICS_H */
+#endif /* GRAPHICS_H */

@@ -6,6 +6,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
+#include "matrix_ll.h"
 #include "matrix.h"
 #include "tools.h"
 
@@ -87,42 +88,15 @@ int matrix_cmd(enum matrix_cmd cmd)
 	return 0;
 }
 
-#define MATRIX_NUM_PANELS_ROWS 5
-#define MATRIX_NUM_PANELS_COLS 5
-
-#define MATRIX_BYTES_PER_PANEL 10
-#define MATRIX_BITS_PER_PANEL (MATRIX_BYTES_PER_PANEL*8)
-#define MATRIX_NUM_PANELS (MATRIX_NUM_PANELS_ROWS*MATRIX_NUM_PANELS_COLS)
-
-#define MATRIX_NUM_SHIFTERS ((MATRIX_NUM_PANELS+7)/8)
-
-#define MATRIX_NUM_ROWS (MATRIX_NUM_PANELS_ROWS*9)
-#define MATRIX_NUM_COLS (MATRIX_NUM_PANELS_COLS*8)
-
-#define MATRIX_PANEL_NO(x,y) ( (x/8) + MATRIX_NUM_PANELS_ROWS*(y/9) )
-
-#define MATRIX_PICTURE_SIZE (MATRIX_NUM_SHIFTERS * MATRIX_BITS_PER_PANEL)
-
-#define MATRIX_BYTES_ROWS ((MATRIX_NUM_ROWS+7)/8)
-#define MATRIX_BYTES_COLS ((MATRIX_NUM_COLS+7)/8)
-
-#define MATRIX_PICTURES_PER_FRAME 3
-
-#define MATRIX_COMMAND_LEN 4
-
-#define MATRIX_CMD_IGNORE 0
-
-typedef unsigned char matrix_picture_t[MATRIX_PICTURE_SIZE];
-typedef matrix_picture_t matrix_frame_t[MATRIX_PICTURES_PER_FRAME];
-
-static void matrix_setPixel(matrix_frame_t *pic, unsigned int x,
+/* Matrix low level conversions */
+static void matrix_setPixel(ll_frame_t *pic, unsigned int x,
 			    unsigned int y, int brightness, bool is_grayscale)
 {
 	unsigned layer;
 	unsigned int x_o = x % 8;
 	unsigned int y_o = y % 9;
 
-	unsigned int panel_no = MATRIX_PANEL_NO(x, y);
+	unsigned int panel_no = PANEL_NO(x, y);
 
 	unsigned int array_offset = (((x_o * 10) + y_o) * 4) + 4;
 	unsigned int bit_offset = panel_no;
@@ -153,17 +127,17 @@ static void matrix_send(picture_t *pic)
 {
 	int x, y;
 	unsigned char brightness;
-	size_t len = sizeof(matrix_picture_t);
+	size_t len = sizeof(ll_picture_t);
 	bool is_grayscale = false;
 
 	// Independent from mode, this is the maximum size
-	matrix_frame_t buffer;
+	ll_frame_t buffer;
 
 	// Zero buffer
 	bzero(&buffer, sizeof(buffer));
 
 	if (m_mode == MATRIX_MODE_GRAYSCALE) {
-	    len = sizeof(matrix_frame_t);
+	    len = sizeof(ll_frame_t);
 	    is_grayscale = true;
 	}
 
