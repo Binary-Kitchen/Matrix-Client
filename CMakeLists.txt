@@ -4,7 +4,7 @@ project(Matrix-Client)
 
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
-set(CMAKE_C_FLAGS "-DDEBUG -ggdb -O0 -Wall -Wextra")
+set(CMAKE_C_FLAGS "-DDEBUG -ggdb -O0 -Wall -Wextra -Wunused-variable -Werror")
 
 set(MATRIX_CLIENT_VERSION_MAJOR "\"0\"")
 set(MATRIX_CLIENT_VERSION_MINOR "\"5\"")
