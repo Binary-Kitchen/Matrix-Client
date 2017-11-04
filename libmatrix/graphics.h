@@ -1,6 +1,9 @@
 #ifndef GRAPHICS_H
 #define	GRAPHICS_H
 
+#include <stdlib.h>
+#include <string.h>
+
 #include "matrix_ll.h"
 
 #define PIX_FACTOR ((double)31.875)
@@ -16,13 +19,28 @@
 
 typedef unsigned char picture_t[PICTURE_SIZE];
 
-picture_t *picture_alloc();
-void picture_free(picture_t * picture);
-void picture_copy(picture_t * dst, picture_t * src);
-picture_t *picture_dup(picture_t * src);
+picture_t *picture_alloc(void);
+picture_t *picture_dup(picture_t *src);
 
-void picture_clear(picture_t * picture);
-void picture_full(picture_t * picture);
+static inline void picture_clear(picture_t *picture)
+{
+	memset(*picture, 0, sizeof(picture_t));
+}
+
+static inline void picture_full(picture_t *picture)
+{
+	memset(*picture, 0xff, sizeof(picture_t));
+}
+
+static inline picture_t *picture_copy(picture_t * dst, picture_t * src)
+{
+	return memcpy(dst, src, sizeof(picture_t));
+}
+
+static inline void picture_free(picture_t *picture)
+{
+	free(picture);
+}
 
 void picture_setPixel(picture_t * picture, unsigned int x, unsigned int y,
 		      unsigned char on);

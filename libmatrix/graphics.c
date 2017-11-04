@@ -1,41 +1,27 @@
-#include <string.h>
-#include <stdlib.h>
-
 #include "graphics.h"
 #include "tools.h"
 
-picture_t *picture_alloc()
+picture_t *picture_alloc(void)
 {
-	picture_t *foo = (picture_t *) malloc(sizeof(picture_t));
-	picture_clear(foo);
-	return foo;
-}
+	picture_t *ret;
 
-void picture_free(picture_t * picture)
-{
-	free(picture);
-}
+	ret = malloc(sizeof(picture_t));
+	if (!ret)
+		return NULL;
+	picture_clear(ret);
 
-void picture_clear(picture_t * picture)
-{
-	bzero(*picture, sizeof(picture_t));
-}
-
-void picture_full(picture_t * picture)
-{
-	memset(*picture, 0xff, sizeof(picture_t));
-}
-
-void picture_copy(picture_t * dst, picture_t * src)
-{
-	memcpy(dst, src, sizeof(picture_t));
+	return ret;
 }
 
 picture_t *picture_dup(picture_t * src)
 {
-	picture_t *dup = (picture_t *) malloc(sizeof(picture_t));
-	picture_copy(dup, src);
-	return dup;
+	picture_t *dup;
+
+	dup = malloc(sizeof(picture_t));
+	if (!dup)
+		return NULL;
+
+	return picture_copy(dup, src);
 }
 
 void picture_setPixel(picture_t * pic, unsigned int x, unsigned int y,
