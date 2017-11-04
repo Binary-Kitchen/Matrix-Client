@@ -13,7 +13,7 @@
 #define NUM_ROWS (NUM_PANELS_ROWS*9)
 #define NUM_COLS (NUM_PANELS_COLS*8)
 
-#define PANEL_NO(x,y) ( (x/8) + NUM_PANELS_ROWS*(y/9) )
+#define PANEL_NO(x, y) ( (x/8) + NUM_PANELS_ROWS*(y/9) )
 
 #define PICTURE_SIZE (NUM_SHIFTERS * BITS_PER_PANEL)
 
