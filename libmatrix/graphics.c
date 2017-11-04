@@ -1,5 +1,4 @@
 #include "graphics.h"
-#include "tools.h"
 
 picture_t *picture_alloc(void)
 {
