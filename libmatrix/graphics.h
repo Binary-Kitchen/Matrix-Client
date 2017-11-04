@@ -17,7 +17,7 @@
 #define PIX_6 192
 #define PIX_7 224
 
-typedef unsigned char picture_t[PICTURE_SIZE];
+typedef unsigned char picture_t[NUM_ROWS * NUM_COLS];
 
 picture_t *picture_alloc(void);
 picture_t *picture_dup(picture_t *src);
