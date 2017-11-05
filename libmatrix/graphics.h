@@ -42,19 +42,21 @@ static inline void picture_free(picture_t *picture)
 	free(picture);
 }
 
-void picture_setPixel(picture_t * picture, unsigned int x, unsigned int y,
+void picture_setPixel(picture_t *picture, unsigned int x, unsigned int y,
 		      unsigned char on);
-unsigned char picture_getPixel(picture_t * picture, unsigned int x,
+unsigned char picture_getPixel(picture_t *picture, unsigned int x,
 			       unsigned int y);
 
-void picture_raw2pic(picture_t * pic, const unsigned char *raw);
+void picture_raw2pic(picture_t *pic, const unsigned char *raw);
+
+void picture_print(picture_t *pic, int m_mode);
 
 #define SCROLL_LEFT 0
 #define SCROLL_RIGHT 1
 #define SCROLL_UP 2
 #define SCROLL_DOWN 3
 
-void picture_scroll(picture_t * pic, unsigned direction,
+void picture_scroll(picture_t *pic, unsigned direction,
 		    const unsigned char *fillup);
 
 #endif /* GRAPHICS_H */

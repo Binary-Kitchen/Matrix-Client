@@ -8,7 +8,6 @@
 
 #include "matrix_ll.h"
 #include "matrix.h"
-#include "tools.h"
 
 static bool sil, dev;
 
