@@ -3,6 +3,6 @@
 
 #include "graphics.h"
 
-void picture_print(picture_t * pic, int m_mode);
+void picture_print(picture_t *pic, int m_mode);
 
 #endif

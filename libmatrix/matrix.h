@@ -16,6 +16,6 @@ int matrix_init(bool silence, bool develop, const char *server, int port);
 void matrix_close(void);
 
 int matrix_cmd(enum matrix_cmd cmd);
-void matrix_update(picture_t * pic);
+void matrix_update(picture_t *pic);
 
 #endif
