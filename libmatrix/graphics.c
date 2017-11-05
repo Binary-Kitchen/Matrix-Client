@@ -3,14 +3,14 @@
 #include "graphics.h"
 #include "matrix.h"
 
-const char bright0[] = "\e[31m\e[2m.";
-const char bright1[] = "\e[31m\e[2mo";
-const char bright2[] = "\e[31m\e[2mO";
-const char bright3[] = "\e[31m\e[2m0";
-const char bright4[] = "\e[31m\e[2mO";
-const char bright5[] = "\e[31m\e[1mO";
-const char bright6[] = "\e[31m\e[1m0";
-const char bright7[] = "\e[31m\e[1mO";
+static const char bright0[] = "\e[31m\e[2m.";
+static const char bright1[] = "\e[31m\e[2mo";
+static const char bright2[] = "\e[31m\e[2mO";
+static const char bright3[] = "\e[31m\e[2m0";
+static const char bright4[] = "\e[31m\e[2mO";
+static const char bright5[] = "\e[31m\e[1mO";
+static const char bright6[] = "\e[31m\e[1m0";
+static const char bright7[] = "\e[31m\e[1mO";
 
 static const char *bright_table[] = {
 	bright0,
