@@ -1,5 +1,4 @@
 set(LIBMATRIX_SRCS graphics.c graphics.h
-                   tools.c tools.h
                    drawing.c drawing.h
                    matrix.c matrix.h
                    font.c font.h
